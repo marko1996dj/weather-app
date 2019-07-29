@@ -1,0 +1,45 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: lightblue;
+  .App {
+    margin: 100px 33%;
+    text-align: center;
+    display: block;
+    input {
+      color: darken(#dedede, 50%);
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 30px;
+      border-radius: 5px;
+      border: 1px solid #dedede;
+      &::placeholder{
+        color: darken(#dedede, 10%);
+      }
+    }
+    button {
+      padding: 8px 20px;
+      border: 1px solid #dedede;
+      border-radius: 5px;
+      transition: 300ms ease-in-out;
+      background-color: white;
+      color: darken(#dedede, 50%);
+      &:hover {
+        color: white;
+        background-color: darken(#dedede, 50%);
+        cursor: pointer;
+        border: 1px solid darken(#dedede, 50%);
+      }
+    }
+    .Daily-Data {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+
+
+

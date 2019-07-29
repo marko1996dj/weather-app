@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 
 import Day from './Day/Day';
 
@@ -17,8 +17,14 @@ class App extends Component {
 		this.handleChange = this.handleChange.bind(this);
 	}
 
+
+	getWeatherData = () => {
+		this.getCurrentWeatherData();
+		this.getWeeklyWeatherData();
+	}
+
 	getCurrentWeatherData = () => {
-		let dailyUrl = `https://api.openweathermap.org/data/2.5/find?q=${this.state.value}&units=metric&lang=hr&appid=${this
+		let dailyUrl = `https://api.openweathermap.org/data/2.5/find?q=${this.state.value}&units=metric&appid=${this
 			.state.API_key}`;
 		axios
 			.get(dailyUrl)
@@ -34,7 +40,7 @@ class App extends Component {
 
 	getWeeklyWeatherData = () => {
 		let weeklyUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${this.state
-			.value}&units=metric&lang=hr&appid=${this.state.API_key}`;
+			.value}&units=metric&appid=${this.state.API_key}`;
 		axios
 			.get(weeklyUrl)
 			.then((res) => {
@@ -68,29 +74,27 @@ class App extends Component {
 		let city, temperature, humidity, clouds, iconUrl, icon;
 		if (this.state.weatherData) {
 			if (this.state.weatherData.count > 0) {
-				city = <p>Grad: {this.state.weatherData.list[0].name}</p>;
-				temperature = <p>Temperatura: {this.state.weatherData.list[0].main.temp}°C</p>;
-				humidity = <p>Vlaznost vazduha: {this.state.weatherData.list[0].main.humidity}%</p>;
-				clouds = <p>Oblaci: {this.state.weatherData.list[0].weather[0].description}</p>;
+				city = <p>{this.state.weatherData.list[0].name}</p>;
+				temperature = <p>{this.state.weatherData.list[0].main.temp}°C</p>;
+				humidity = <p>{this.state.weatherData.list[0].main.humidity}%</p>;
+				clouds = <p>{this.state.weatherData.list[0].weather[0].description}</p>;
 				iconUrl = `http://openweathermap.org/img/w/${this.state.weatherData.list[0].weather[0].icon}.png`;
 				icon = <img src={iconUrl} alt={'alt text'} />;
 			}
 		}
 		return (
-			<React.Fragment>
-				<input type="text" placeholder="grad" onChange={this.handleChange} />
-				<button onClick={this.getCurrentWeatherData}>Get Current Weather Data</button>
-				<button onClick={this.getWeeklyWeatherData}>Get Weekly Weather Data</button>
-				{city}
-				{temperature}
-				{humidity}
-				{clouds}
-				{icon}
-				<div style={{display: 'flex'}}>
-					{dailyData}
+				<div className="App">
+					<input type="text" placeholder="Ime grada" onChange={this.handleChange} />
+					<button onClick={this.getWeatherData}>Search</button>
+					<h1>{temperature}</h1>
+					<h2>{city}</h2>
+					{humidity}
+					{clouds}
+					{icon}
+					<div className="Daily-Data">
+						{dailyData}
+					</div>
 				</div>
-				
-			</React.Fragment>
 		);
 	}
 }
