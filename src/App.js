@@ -57,6 +57,7 @@ class App extends Component {
 		this.setState({ value: e.target.value });
 	};
 
+
 	render() {
 		let dailyData;
 		if (this.state.weeklyWeatherData) {
@@ -64,9 +65,10 @@ class App extends Component {
 			console.log(fiveDayData);
 			dailyData = fiveDayData.map((data, index) =>(
 				<Day 
+					date={data.dt_txt.split(' ')[0]}
 					key={index}
 					temperature={data.main.temp}
-					iconUrl = {`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+					iconUrl = {`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
 				/>
 			))
 		}
@@ -78,7 +80,7 @@ class App extends Component {
 				temperature = <p>{this.state.weatherData.list[0].main.temp}°C</p>;
 				humidity = <p>{this.state.weatherData.list[0].main.humidity}%</p>;
 				clouds = <p>{this.state.weatherData.list[0].weather[0].description}</p>;
-				iconUrl = `http://openweathermap.org/img/w/${this.state.weatherData.list[0].weather[0].icon}.png`;
+				iconUrl = `http://openweathermap.org/img/wn/${this.state.weatherData.list[0].weather[0].icon}@2x.png`;
 				icon = <img src={iconUrl} alt={'alt text'} />;
 			}
 		}
