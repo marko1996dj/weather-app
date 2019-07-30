@@ -6,9 +6,9 @@ class Day extends Component {
 
 	constructor(props){
 		super(props)
-		// this.getDate = this.getDate.bind(this);
 		this.state = {
 			date: null,
+			icon: null
 		}
 	}
 
@@ -37,18 +37,19 @@ class Day extends Component {
 				this.setState({date: 'Sunday'})
 			}
 		}	
-	
 
 	render() {
+
 		return(
 			<div className={classes.Day}>
-			<div>{this.props.temperature}°C</div>
-			<div>{this.state.date}</div>
-			<div>
-				<img src={this.props.iconUrl} alt={this.props.icon} />
+				<div>{this.props.temperature}°C</div>
+				<div>{this.state.date}</div>
+				<div className={classes.Image}>
+					<img src={`../../assets/svg/${this.props.iconUrl}.svg`} alt={this.props.icon} />
+				</div>
 			</div>
-		</div>
 		);
 	}
+
 }
 export default Day;

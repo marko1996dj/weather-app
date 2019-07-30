@@ -6,6 +6,7 @@ import Day from './Day/Day';
 import axios from 'axios';
 
 class App extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -67,8 +68,8 @@ class App extends Component {
 				<Day 
 					date={data.dt_txt.split(' ')[0]}
 					key={index}
-					temperature={data.main.temp}
-					iconUrl = {`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+					temperature={Math.trunc(data.main.temp)}
+					iconUrl = {data.weather[0].icon}
 				/>
 			))
 		}
@@ -77,7 +78,7 @@ class App extends Component {
 		if (this.state.weatherData) {
 			if (this.state.weatherData.count > 0) {
 				city = <p>{this.state.weatherData.list[0].name}</p>;
-				temperature = <p>{this.state.weatherData.list[0].main.temp}°C</p>;
+				temperature = <p>{Math.trunc(this.state.weatherData.list[0].main.temp)}°C</p>;
 				humidity = <p>{this.state.weatherData.list[0].main.humidity}%</p>;
 				clouds = <p>{this.state.weatherData.list[0].weather[0].description}</p>;
 				iconUrl = `http://openweathermap.org/img/wn/${this.state.weatherData.list[0].weather[0].icon}@2x.png`;
