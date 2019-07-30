@@ -4,9 +4,9 @@ import './App.scss';
 import Day from './Day/Day';
 
 import axios from 'axios';
+import classes from './App.scss';
 
 class App extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -16,17 +16,16 @@ class App extends Component {
 			locationWeatherData: null,
 			value: null,
 			latitude: '',
-			longitude: '',
+			longitude: ''
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.getMyLocationWeather = this.getMyLocationWeather.bind(this);
 	}
 
-
 	getWeatherData = () => {
 		this.getCurrentWeatherData();
 		this.getWeeklyWeatherData();
-	}
+	};
 
 	getCurrentWeatherData = () => {
 		let dailyUrl = `https://api.openweathermap.org/data/2.5/find?q=${this.state.value}&units=metric&appid=${this
@@ -63,29 +62,53 @@ class App extends Component {
 	};
 
 	getMyLocationWeather = () => {
-		const location = window.navigator && window.navigator.geolocation
-
+		const location = window.navigator && window.navigator.geolocation;
 		if (location) {
-			location.getCurrentPosition((position) => {
-				let url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=${this.state.API_key}`;
-				axios.get(url).then((res) => {
-					const weatherData = res.data;
-					this.setState({ locationWeatherData: weatherData });
-				}).catch((e) => {
-					console.log(e)
-				})
-			}, (error) => {
-				this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
-			})
+			location.getCurrentPosition(
+				(position) => {
+					let url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords
+						.latitude}&lon=${position.coords.longitude}&units=metric&appid=${this.state.API_key}`;
+					axios
+						.get(url)
+						.then((res) => {
+							const weatherData = res.data;
+							this.setState({ locationWeatherData: weatherData });
+						})
+						.catch((e) => {
+							console.log(e);
+						});
+				},
+				(error) => {
+					this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
+				}
+			);
+			location.getCurrentPosition(
+				(position) => {
+					let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords
+						.latitude}&lon=${position.coords.longitude}&units=metric&appid=${this.state.API_key}`;
+					axios
+						.get(url)
+						.then((res) => {
+							const weeklyWeatherData = res.data;
+							this.setState({ weeklyWeatherData: weeklyWeatherData });
+						})
+						.catch((e) => {
+							console.log(e);
+						});
+				},
+				(error) => {
+					this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
+				}
+			);
 		}
-
-	}
+	};
 
 	render() {
-		console.log(this.state.locationWeatherData);
 		let dailyData;
 		if (this.state.weeklyWeatherData) {
-			const fiveDayData = this.state.weeklyWeatherData.list.filter(d => d.dt_txt.split(' ')[1] === this.state.weeklyWeatherData.list[0].dt_txt.split(' ')[1])
+			const fiveDayData = this.state.weeklyWeatherData.list.filter(
+				(d) => d.dt_txt.split(' ')[1] === this.state.weeklyWeatherData.list[0].dt_txt.split(' ')[1]
+			);
 			console.log(fiveDayData);
 			dailyData = fiveDayData.map((data, index) => (
 				<Day
@@ -94,19 +117,16 @@ class App extends Component {
 					temperature={Math.trunc(data.main.temp)}
 					iconUrl={data.weather[0].icon}
 				/>
-			))
+			));
 		}
 		let city, temperature, humidity, clouds, iconUrl, icon;
 		if (this.state.locationWeatherData) {
-
 			city = <p>{this.state.locationWeatherData.name}</p>;
 			temperature = <p>{Math.trunc(this.state.locationWeatherData.main.temp)}°C</p>;
 			humidity = <p>{this.state.locationWeatherData.main.humidity}%</p>;
 			clouds = <p>{this.state.locationWeatherData.weather[0].description}</p>;
-			iconUrl = `http://openweathermap.org/img/wn/${this.state.locationWeatherData.weather[0].icon}@2x.png`;
-			icon = <img src={iconUrl} alt={'alt text'} />;
+			icon = <img src={`../assets/svg/${this.state.locationWeatherData.weather[0].icon}.svg`} alt={'alt text'} />;
 		}
-
 
 		if (this.state.weatherData) {
 			if (this.state.weatherData.count > 0) {
@@ -120,25 +140,27 @@ class App extends Component {
 		}
 		return (
 			<div className="App">
-				<input type="text" placeholder="Ime grada" onChange={this.handleChange} />
-				<button onClick={this.getWeatherData}>Search</button>
-				<h1>{temperature}</h1>
-				<h2>{city}</h2>
-				{humidity}
-				{clouds}
-				{icon}
-				<div className="Daily-Data">
-					{dailyData}
+				<div className="Wrapper">
+					<div className="Left">
+						<div className="Icon">{icon}</div>
+						<div className="Description">{clouds}</div>
+						<div className="City">{city}</div>
+						<h1>{temperature}</h1>
+					</div>
+					<div className="Right">{humidity}</div>
 				</div>
+
+				{/* <input type="text" placeholder="Ime grada" onChange={this.handleChange} />
+				<button onClick={this.getWeatherData}>Search</button> */}
+
+				<div className="Daily-Data">{dailyData}</div>
 			</div>
 		);
 	}
 
-
-	componentDidMount() {
+	componentWillMount() {
 		this.getMyLocationWeather();
 	}
-
 }
 
 export default App;

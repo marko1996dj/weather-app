@@ -42,8 +42,8 @@ class Day extends Component {
 
 		return(
 			<div className={classes.Day}>
-				<div>{this.state.date}</div>
-				<div>{this.props.temperature}°C</div>
+				<div className={classes.Date}>{this.state.date}</div>
+				<div className={classes.Temperature}>{this.props.temperature}°C</div>
 				<div className={classes.Image}>
 					<img src={`../../assets/svg/${this.props.iconUrl}.svg`} alt={this.props.icon} />
 				</div>
