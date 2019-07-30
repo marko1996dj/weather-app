@@ -1,9 +1,6 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
-  background-color: lightblue;
   .App {
     margin: 100px 33%;
     text-align: center;
@@ -38,6 +35,15 @@ html, body {
       justify-content: center;
     }
   }
+}
+html{
+    background: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.35), 
+      rgba(0, 0, 0, 0.35)
+    ),
+      url('./assets/sunset-background2.jpeg');
+    background-size: cover;
 }
 
 

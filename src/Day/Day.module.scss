@@ -1,4 +1,13 @@
 .Day {
     margin-right: 30px;
     justify-content: center;
+    background-color: rgba(255,255,255,0.2);
+    min-height: 150px;
+    min-width: 150px;
+    .Image{
+        img{
+            height: 75px;
+            width: 75px;
+        }
+    }
 }
