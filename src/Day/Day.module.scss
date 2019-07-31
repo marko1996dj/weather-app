@@ -1,27 +1,27 @@
 .Day {
-    margin-right: 30px;
-    justify-content: center;
-    -webkit-box-shadow: 2px 9px 56px 11px rgba(0,0,0,0.75);
-    -moz-box-shadow: 2px 9px 56px 11px rgba(0,0,0,0.75);
-    box-shadow: 2px 9px 56px 11px rgba(0,0,0,0.75);
-    min-height: 150px;
-    min-width: 250px;
-    text-align: center;
-    .Image{
-        img{
-            height: 75px;
-            width: 75px;
-            margin-bottom: 30px;
-        }
-    }
-    .Date {
-        font-size: 25px;
-        text-align: center;
-        margin: 20px 0;
-    }
-    .Temperature {
-        font-size: 30px;
-        font-weight: bolder;
-        margin-bottom: 30px;
-    }
+	margin: 0 30px 30px 0;
+	justify-content: center;
+	-webkit-box-shadow: 2px 9px 56px 11px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 2px 9px 56px 11px rgba(0, 0, 0, 0.75);
+	box-shadow: 2px 9px 56px 11px rgba(0, 0, 0, 0.75);
+	min-height: 150px;
+	min-width: 250px;
+	text-align: center;
+	.Image {
+		img {
+			height: 75px;
+			width: 75px;
+			margin-bottom: 30px;
+		}
+	}
+	.Date {
+		font-size: 25px;
+		text-align: center;
+		margin: 20px 0;
+	}
+	.Temperature {
+		font-size: 30px;
+		font-weight: bolder;
+		margin-bottom: 30px;
+	}
 }

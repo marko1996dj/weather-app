@@ -4,7 +4,6 @@ import './App.scss';
 import Day from './Day/Day';
 
 import axios from 'axios';
-import classes from './App.scss';
 
 class App extends Component {
 	constructor(props) {
@@ -16,10 +15,17 @@ class App extends Component {
 			locationWeatherData: null,
 			value: null,
 			latitude: '',
-			longitude: ''
+			longitude: '',
+			inputStyle: {
+				opacity: '0'
+			},
+			buttonStyle: {
+				opacity: '0'
+			}
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.getMyLocationWeather = this.getMyLocationWeather.bind(this);
+		this.addStyle = this.addStyle.bind(this);
 	}
 
 	getWeatherData = () => {
@@ -103,6 +109,32 @@ class App extends Component {
 		}
 	};
 
+	addStyle = () => {
+		let inputStyle, buttonStyle
+		if(this.state.inputStyle.opacity === '1'){
+			inputStyle = {
+				width: '0px',
+				transitionDuration: '.5s',
+				opacity: '0'
+			};
+			buttonStyle = {
+				opacity: '0'
+			};
+		}else{
+			inputStyle = {
+				width: '300px',
+				transitionDuration: '.5s',
+				opacity: '1'
+			};
+			buttonStyle = {
+				opacity: '1'
+			};
+		}
+
+		this.setState({ inputStyle: inputStyle });
+		this.setState({ buttonStyle: buttonStyle });
+	};
+
 	render() {
 		let dailyData;
 		if (this.state.weeklyWeatherData) {
@@ -119,7 +151,7 @@ class App extends Component {
 				/>
 			));
 		}
-		let city, temperature, humidity, clouds, iconUrl, icon;
+		let city, temperature, humidity, clouds, icon;
 		if (this.state.locationWeatherData) {
 			city = <p>{this.state.locationWeatherData.name}</p>;
 			temperature = <p>{Math.trunc(this.state.locationWeatherData.main.temp)}°C</p>;
@@ -134,8 +166,7 @@ class App extends Component {
 				temperature = <p>{Math.trunc(this.state.weatherData.list[0].main.temp)}°C</p>;
 				humidity = <p>{this.state.weatherData.list[0].main.humidity}%</p>;
 				clouds = <p>{this.state.weatherData.list[0].weather[0].description}</p>;
-				iconUrl = `http://openweathermap.org/img/wn/${this.state.weatherData.list[0].weather[0].icon}@2x.png`;
-				icon = <img src={iconUrl} alt={'alt text'} />;
+				icon = <img src={`http://openweathermap.org/img/wn/${this.state.weatherData.list[0].weather[0].icon}@2x.png`} alt={'alt text'} />;
 			}
 		}
 		return (
@@ -146,12 +177,27 @@ class App extends Component {
 						<div className="Description">{clouds}</div>
 						<div className="City">{city}</div>
 						<h1>{temperature}</h1>
+						<div className="Search">
+							<img
+								style={{ width: '35px', height: '35px' }}
+								onClick={this.addStyle}
+								src={'../assets/svg/search.svg'}
+								alt="search.svg"
+							/>
+						</div>
+
+						<input
+							style={this.state.inputStyle}
+							type="text"
+							placeholder="Ime grada"
+							onChange={this.handleChange}
+						/>
+						<button style={this.state.buttonStyle} onClick={this.getWeatherData}>
+							Search
+						</button>
 					</div>
 					<div className="Right">{humidity}</div>
 				</div>
-
-				{/* <input type="text" placeholder="Ime grada" onChange={this.handleChange} />
-				<button onClick={this.getWeatherData}>Search</button> */}
 
 				<div className="Daily-Data">{dailyData}</div>
 			</div>
