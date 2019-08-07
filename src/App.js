@@ -110,8 +110,8 @@ class App extends Component {
 	};
 
 	addStyle = () => {
-		let inputStyle, buttonStyle
-		if(this.state.inputStyle.opacity === '1'){
+		let inputStyle, buttonStyle;
+		if (this.state.inputStyle.opacity === '1') {
 			inputStyle = {
 				width: '0px',
 				transitionDuration: '.5s',
@@ -120,9 +120,9 @@ class App extends Component {
 			buttonStyle = {
 				opacity: '0'
 			};
-		}else{
+		} else {
 			inputStyle = {
-				width: '300px',
+				width: '240px',
 				transitionDuration: '.5s',
 				opacity: '1'
 			};
@@ -141,7 +141,7 @@ class App extends Component {
 			const fiveDayData = this.state.weeklyWeatherData.list.filter(
 				(d) => d.dt_txt.split(' ')[1] === this.state.weeklyWeatherData.list[0].dt_txt.split(' ')[1]
 			);
-			console.log(fiveDayData);
+
 			dailyData = fiveDayData.map((data, index) => (
 				<Day
 					date={data.dt_txt.split(' ')[0]}
@@ -151,13 +151,30 @@ class App extends Component {
 				/>
 			));
 		}
-		let city, temperature, humidity, clouds, icon;
+		let city, temperature, humidity, clouds, icon, windSpeed, pressure;
 		if (this.state.locationWeatherData) {
 			city = <p>{this.state.locationWeatherData.name}</p>;
 			temperature = <p>{Math.trunc(this.state.locationWeatherData.main.temp)}°C</p>;
-			humidity = <p>{this.state.locationWeatherData.main.humidity}%</p>;
+			humidity = (
+				<div style={{ display: 'flex' }}>
+					<img src={'../assets/svg/tint-solid.svg'} alt="icon" />
+					<span>{this.state.locationWeatherData.main.humidity}%</span>
+				</div>
+			);
 			clouds = <p>{this.state.locationWeatherData.weather[0].description}</p>;
 			icon = <img src={`../assets/svg/${this.state.locationWeatherData.weather[0].icon}.svg`} alt={'alt text'} />;
+			windSpeed = (
+				<div style={{ display: 'flex' }}>
+					<img src={'../assets/svg/wind-solid.svg'} alt="icon" />
+					<span>{this.state.locationWeatherData.wind.speed} km/h</span>
+				</div>
+			);
+			pressure = (
+				<div style={{ display: 'flex' }}>
+					<img src={'../assets/svg/gauge.svg'} alt="icon" />
+					<span>{this.state.locationWeatherData.main.pressure} mbar</span>
+				</div>
+			);
 		}
 
 		if (this.state.weatherData) {
@@ -166,9 +183,12 @@ class App extends Component {
 				temperature = <p>{Math.trunc(this.state.weatherData.list[0].main.temp)}°C</p>;
 				humidity = <p>{this.state.weatherData.list[0].main.humidity}%</p>;
 				clouds = <p>{this.state.weatherData.list[0].weather[0].description}</p>;
-				icon = <img src={`http://openweathermap.org/img/wn/${this.state.weatherData.list[0].weather[0].icon}@2x.png`} alt={'alt text'} />;
+				icon = (
+					<img src={`../assets/svg/${this.state.weatherData.list[0].weather[0].icon}.svg`} alt={'alt text'} />
+				);
 			}
 		}
+		console.log(this.state.locationWeatherData);
 		return (
 			<div className="App">
 				<div className="Wrapper">
@@ -177,26 +197,35 @@ class App extends Component {
 						<div className="Description">{clouds}</div>
 						<div className="City">{city}</div>
 						<h1>{temperature}</h1>
-						<div className="Search">
-							<img
-								style={{ width: '35px', height: '35px' }}
-								onClick={this.addStyle}
-								src={'../assets/svg/search.svg'}
-								alt="search.svg"
-							/>
-						</div>
-
-						<input
-							style={this.state.inputStyle}
-							type="text"
-							placeholder="Ime grada"
-							onChange={this.handleChange}
-						/>
-						<button style={this.state.buttonStyle} onClick={this.getWeatherData}>
-							Search
-						</button>
+						<div className="Search" />
 					</div>
-					<div className="Right">{humidity}</div>
+					<div className="Right">
+						<div className="Humidity">{humidity}</div>
+						<div className="Pressure">{pressure}</div>
+						<div className="WindSpeed">{windSpeed}</div>
+					</div>
+				</div>
+				<div className="SearchImg">
+					<img
+						style={{ width: '35px', height: '35px' }}
+						onClick={this.addStyle}
+						src={'../assets/svg/search.svg'}
+						alt="search.svg"
+					/>
+				</div>
+
+				<div className="SearchInput">
+					<input
+						style={this.state.inputStyle}
+						type="text"
+						placeholder="Ime grada"
+						onChange={this.handleChange}
+					/>
+				</div>
+				<div className="SearchButton">
+				<button style={this.state.buttonStyle} onClick={this.getWeatherData}>
+						Search
+					</button>
 				</div>
 
 				<div className="Daily-Data">{dailyData}</div>

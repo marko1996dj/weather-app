@@ -1,12 +1,20 @@
+@import './mixin';
+
 html,
 body {
 	margin: 0;
 	padding: 0;
 	color: white;
+	background-color: black;
+	background-color: rgba(93, 168, 255, 1);
+	overflow: hidden;
 	.App {
-		padding: 30px;
 		.Wrapper {
+			padding-top: 30px;
+			display: flex;
+			justify-content: space-between;
 			.Left {
+				margin-left: 50px;
 				.City {
 					p {
 						font-size: 45px;
@@ -24,53 +32,107 @@ body {
 						height: 100px;
 						width: 100px;
 					}
-        }
-        input{
-          height: 20px;
-          width: 0px;
-          border: none;
-          padding: 15px;
-          margin-right: 30px;
-          border-radius: 5px;
-          opacity: 0;
-        }
-        .Search {
-          margin-bottom: 30px;
-          img{
-            &:hover{
-              cursor: pointer;
-            }
-          }
-        }
-        button{
-          padding: 17px;
-          background-color: white;
-          border: none;
-          border-radius: 5px;
-          color: gray;
-          transition: .3s ease-in-out;
-          opacity: 0;
-          &:hover{
-            cursor: pointer;
-            background-color: gray;
-            color: white;
-          }
-        }
+				}
 			}
-			display: flex;
-			justify-content: space-between;
+			.Right {
+				margin-right: 50px;
+				.Humidity,
+				.Pressure,
+				.WindSpeed {
+					margin-bottom: 20px;
+					img {
+						height: 30px;
+						width: 30px;
+						margin-right: 30px;
+					}
+					font-size: 20px;
+				}
+			}
 		}
 		.Daily-Data {
 			display: flex;
 			flex-wrap: wrap;
-      margin-top: 190px;
 			justify-content: center;
+		}
+		.Search {
+			margin-bottom: 30px;
+			img {
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+		.SearchImg {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		.SearchInput {
+			text-align: center;
+			margin-bottom: 30px;
+			input {
+				height: 20px;
+				width: 0px;
+				border: none;
+				padding: 15px;
+				margin-right: 30px;
+				border-radius: 5px;
+				opacity: 0;
+			}
+		}
+		.SearchButton {
+			text-align: center;
+			button {
+				padding: 17px;
+				background-color: white;
+				border: none;
+				border-radius: 5px;
+				color: gray;
+				transition: .3s ease-in-out;
+				opacity: 0;
+				&:hover {
+					cursor: pointer;
+					background-color: gray;
+					color: white;
+				}
+			}
 		}
 	}
 }
-html {
-	background: linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10)),
-		url('./assets/sunset-background2.jpeg');
-	background-size: cover;
-	background-repeat: no-repeat;
+
+@include breakpoint (xs) {
+	body {
+		.App {
+			.Wrapper {
+				display: block;
+				.Left {
+					text-align: center;
+					margin-left: 0;
+				}
+				.Right {
+					display: none;
+				}
+			}
+			.Daily-Data {
+				margin-top: 190px;
+			}
+		}
+	}
+}
+
+@include breakpoint (md) {
+	body {
+		.App {
+			margin-top: 0px;
+			.Daily-Data {
+				justify-content: left;
+			}
+			.Search,
+			.SearchButton,
+			.SearchImg,
+			.SearchInput {
+				text-align: left;
+				margin-left: 50px;
+			}
+		}
+	}
 }
