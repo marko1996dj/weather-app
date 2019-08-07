@@ -188,7 +188,6 @@ class App extends Component {
 				);
 			}
 		}
-		console.log(this.state.locationWeatherData);
 		return (
 			<div className="App">
 				<div className="Wrapper">
@@ -223,7 +222,7 @@ class App extends Component {
 					/>
 				</div>
 				<div className="SearchButton">
-				<button style={this.state.buttonStyle} onClick={this.getWeatherData}>
+					<button style={this.state.buttonStyle} onClick={this.getWeatherData}>
 						Search
 					</button>
 				</div>
