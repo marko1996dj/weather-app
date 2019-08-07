@@ -1,7 +1,7 @@
 {
   "name": "weather-app",
   "version": "0.1.0",
-  "homepage": "http://marko1996dj.github.io/weather-app/",
+  "homepage": "https://marko1996dj.github.io/weather-app/",
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
